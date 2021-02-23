@@ -35,9 +35,10 @@ for i in range (20):
     stairs(i)
     total_ways.append(ways)
 
+modn = 15
 fibo = [0,1,1]
-for i in range (18):
-    fibo.append(fibo[-1] + fibo[-2])
+for i in range (100):
+    fibo.append((fibo[-1] + fibo[-2])%modn)
 
 solution = Solution()
 print(solution.climbStairs(30))
