@@ -11,6 +11,7 @@ Created on Mon Feb 22 17:40:21 2021
 import matplotlib.pyplot as plt
 import random 
 import numpy as np
+import math
 
 class Solution:
     def __init__(self, radius: float, x_center: float, y_center: float):
@@ -49,10 +50,11 @@ solution = Solution(r,x_c,y_c)
 y_1 = np.arange(y_c - r, y_c + r, r/10000)
 x_1 = [x_c + np.sqrt((r - i + y_c)*(r + i - y_c)) for i in y_1]
 x_2 = [x_c - np.sqrt((r - i + y_c)*(r + i - y_c)) for i in y_1]
-scatter = [solution.randPoint() for i in range (100000)]    
+scatter = [solution.randPoint1() for i in range (1000)]    
 points = np.array(scatter).transpose()
 
 # Plot
+plt.figure()
 plt.plot(x_1,y_1)
 plt.plot(x_2,y_1)
 plt.scatter(points[0],points[1],color = "red")
