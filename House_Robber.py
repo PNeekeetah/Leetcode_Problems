@@ -6,12 +6,44 @@ Created on Sat Feb 20 19:10:29 2021
 """
 import numpy as np
 
-l = [1,2,3,4,5,6,7,8,9,10]
+from binarytree import tree, bst, heap
+from binarytree import Node
+
+l = [1,2,3,4,5,6,7,8,9]
+l = [51,6,2,0,41,0,500]
 #l = [3,24,5,2,0]
 #l = np.array([1,2,3,4,5,78,29,1,2])
 t1 = [2,5,64,41,132,4,1,2,4,5,1,2,4,6,2,7,72,2,1,243,5,1,2,3,1,1,1,1,1,2,3,4,5,6,7,3,6,7,38,8,3,32,1,1,24,62,2,2,2,2]
 
 
+class Solution:
+    def rob(self, nums: list()) -> int:
+        seen = {}
+        def robFrom(position, nums):
+            nonlocal seen
+            if position >= len(nums):
+                return 0
+            if seen.get(position) != None:
+                return seen[position]
+            
+            answer = max(robFrom(position+1,nums), robFrom(position+2,nums) + nums[position])
+            seen[position] = answer
+            return answer
+                
+        return robFrom(0,nums)
+
+
+
+"""
+After a couple of weeks, I decided to come back to this problem and solve it.
+
+I still didn't manage to get it quite right, so I've thrown in the towel for 
+this problem. 
+
+"""
+
+
+"""
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -35,31 +67,21 @@ class TreeTraversal:
                 self.all_sums.append(total + node.right.val)
                 self.dfs_inorder(node.right, total + node.right.val )
             
-def build_tree(nums : list, decision : int, seen_states = None):
+def build_tree(nums : list,s : int, decision : int, seen_states = None):
     
-    if (not seen_states):
-        seen_states = {}
     if (decision >= len(nums)-1):
         return
     
-    node = TreeNode(nums[decision])
+    node = Node(s) 
+    node.left = build_tree(nums,s + nums[decision],decision + 2)
+    node.right = build_tree(nums,s + nums[decision + 1] , decision + 3)
     
-    if not(seen_states.get((decision,0))):
-        seen_states[(decision,0)] = node
-        node.left = build_tree(nums, decision + 2, seen_states)
-    else:
-        node.left = seen_states[(decision,0)]
-        
-    if not(seen_states.get((decision,1))):
-        seen_states[(decision,1)] = node
-        node.right = build_tree(nums, decision + 3, seen_states)
-    
-    else:
-        node.right = seen_states[(decision,1)]
         
     return node
 
-root = build_tree(l,0) 
+root = build_tree(l,0,0) 
+print (root)
+
 traversal = TreeTraversal()
 traversal.dfs_inorder(root,0)
 var1 = 0
@@ -112,7 +134,7 @@ while(i < len(l)-2):
         total_sum += l[i+1]
     i += 2
 
-"""
+
 I inadvertently stopped the timer at 39 minutes and 46 seconds.
 I started a new one.
 
