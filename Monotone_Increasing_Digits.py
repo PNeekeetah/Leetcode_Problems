@@ -63,8 +63,8 @@ class Solution:
         digits[turning_point] -= 1
         return reassembleNumber(digits)
     
-        
-    def monotoneIncreasingDigits1(self, N: int) -> int: # First solution
+    # First solution
+    def monotoneIncreasingDigits1(self, N: int) -> int: 
         aux = N
         digits = []
         while aux > 0:
