@@ -4,7 +4,11 @@ Created on Sat Jun  5 14:55:46 2021
 
 @author: Nikita
 """
+"""
+Came up with this solution in about 10 minutes.
+Beats 12% in terms of runtime and 37% in terms of memory.
 
+"""
 class Solution:
     def checkIfCanBreak(self, s1: str, s2: str) -> bool:
         char_list1 = [c for c in s1]
