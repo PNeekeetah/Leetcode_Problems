@@ -6,9 +6,26 @@ Created on Tue Feb 16 12:53:52 2021
 """
 
 class ListNode:
+    """
+    Initial version
     def __init__(self, x):
         self.val = x
         self.next = None
+    """    
+    def __init__(self,val, next_node = None):
+        self.val = val
+        self.next = next_node
+        
+    def get_next(self):
+        return self.next
+    
+    def __str__(self):
+        """
+        if self.next:
+            return "|{}|->|{}|".format(self.val,self.next.val)  
+        else:
+            """
+        return "|{}|".format(self.val)
         
     def goThrough(self):
         current_node = self
@@ -19,8 +36,46 @@ class ListNode:
         
 class Solution: 
     def __init__(self):
-        next
+        pass
+       
+    def reverseList2(self, head: ListNode) -> ListNode:
+        if head is None:
+            return None
+        """
+        3 Pointer linear method non-recursive
+        """
+        previous = None
+        current = head
+        next_node = None
+        while current is not None:
+            next_node = current.get_next() # get next node
+            current.next = previous  # switch first current reference backwards
+            previous = current  # previous node becomes current
+            current = next_node      # current_node becomes previous            
+        return previous
+            
         
+            
+    """
+    More elegant solution
+    """
+    def reverseList1(self, head: ListNode) -> ListNode:
+        new_head = None
+        def traverse(node : ListNode):
+            nonlocal new_head
+            if node.next is not None:
+                next_node = traverse(node.next)
+                next_node.next = node
+            else:
+                new_head = node
+            return node
+        
+        if head:
+            traverse(head)
+            head.next = None
+        
+        return new_head       
+
     def reverseList(self, head: ListNode) -> ListNode:
         
         if not(head):
@@ -48,7 +103,7 @@ class Solution:
             second.next = first
             first = second
             second = aux_node
-                        
+        
         second.next = first
         
         return second
@@ -63,10 +118,9 @@ head.next = node_1
 node_1.next = node_2
 node_2.next = node_3
 node_3.next = node_4
-node_4.next = head
 
 solution = Solution()
-solution.reverseList(head)
+head = solution.reverseList2(head)
 head.goThrough()
 
 """
