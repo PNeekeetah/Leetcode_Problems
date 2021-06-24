@@ -5,6 +5,18 @@ Created on Tue Feb 16 21:50:50 2021
 @author: Nikita
 """
 
+def advance_one (node):
+    if node is not None:
+        node = node.next
+    else:
+        return None
+    return node
+    
+def advance_two (node):
+    for i in range(2):
+        node = advance_one (node)
+    return node
+
 class ListNode:
     def __init__(self, x):
         self.val = x
@@ -19,6 +31,18 @@ class ListNode:
         
 class Solution:
     def hasCycle(self, head: ListNode) -> bool:
+        fast_node = head
+        slow_node = head
+        while True:
+            fast_node = advance_two(fast_node)
+            slow_node = advance_one(slow_node)
+            if fast_node == slow_node:
+                break
+                
+        return fast_node is not None
+
+    
+    def hasCycle1(self, head: ListNode) -> bool:
         current_node = head
         while (current_node):
             if (current_node.next) and (current_node.next.next):
