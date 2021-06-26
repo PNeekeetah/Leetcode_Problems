@@ -16,9 +16,44 @@ class ListNode:
             current_node = current_node.next
         print("\n")
         
+def advance_one(node : "ListNode") -> "ListNode":
+    if node is not None:
+        return node.next
+    else:
+        return None
+
+def set_sail (node : "ListNode", nodes_number : int) -> "ListNode":
+    current = node 
+    while nodes_number > 1:
+        current = advance_one(current)
+        nodes_number -= 1
+    return current
+
+    
 class Solution:
     def __init__(self):
         return None
+
+    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        sentinel = head
+        previous = None
+        current = head
+        # Advance node n positions (n-1 links)
+        sentinel = set_sail(sentinel, n)
+        
+        # Keep advancing both until sentinel reaches the end
+        while sentinel is not None and sentinel.next is not None:
+            sentinel = advance_one(sentinel)
+            previous = current
+            current = advance_one(current)
+        
+        # If previous remains "None", the head of the list was removed
+        if previous is not None:
+            previous.next = current.next
+        else:
+            head = head.next
+        
+        return head
     
     def removeNthFromEnd1(self, head: ListNode, n: int) -> ListNode: # my own
     
