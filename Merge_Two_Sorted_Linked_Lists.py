@@ -5,6 +5,13 @@ Created on Tue Feb 16 13:42:13 2021
 @author: Nikita
 """
 
+"""
+Latest attempt : 
+    Beats 51% in terms of runtime and 0% in terms of memory
+    Took me about 10 minutes to come up with this solution.
+    
+"""
+
 class ListNode:
     def __init__(self, x):
         self.val = x
@@ -16,12 +23,47 @@ class ListNode:
             print("Node.val = {} ".format(current_node.val) + "Node.next.val = {}".format(current_node.next.val) )
             current_node = current_node.next
         print("\n")
-        
+
+def advance_one(node : "ListNode") -> "ListNode":
+    if node is not None:
+        return node.next
+    else:
+        return None
+    
+def get_larger_node (node1 : "ListNode", node2 : "ListNode") -> ("ListNode",int):
+    if node1 is None and node2 is None:
+        return (None,0)
+    elif node2 is None and node1 is not None:
+        return (node1,1)
+    elif node1 is None and node2 is not None:
+        return (node2,2) 
+    else:
+        if node1.val < node2.val:
+            return (node1,1) 
+        else:
+            return (node2,2)
+
 class Solution: 
     def __init__(self):
         next
-        
-    def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
+    
+    def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:    # latest
+        current1 = l1
+        current2 = l2
+        head = ListNode("head")
+        new_list_current = head
+        while current1 is not None or current2 is not None:
+            new_list_current.next, node_no =  get_larger_node(current1,current2)
+            if node_no == 1:
+                current1 = advance_one(current1)
+            elif node_no == 2:
+                current2 = advance_one(current2)
+            else:
+                break
+            new_list_current = advance_one(new_list_current)
+        return head.next
+    
+    def mergeTwoLists1(self, l1: ListNode, l2: ListNode) -> ListNode:
         if (not l1) and (not l2):
             return None
         elif (not l1):
