@@ -6,15 +6,52 @@ Created on Sun Mar 14 17:14:36 2021
 """
 
 #htqtps://leetcode.com/problems/copy-list-with-random-pointer/
+
+"""
+Updated this solution 
+New version beats 92% in terms of runtime and
+23% in terms of memory. It took me about 10 
+minutes to come up with this solution.
+
+The organization 
+"""
 class Node:
     def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
         self.val = int(x)
         self.next = next
         self.random = random
         self.list = []
+
+def advance_one (node : "Node") -> "Node":
+    if node.next is not None:
+        return node.next
+    else:
+        return None
+
+def fetch_node (nodes_dict : dict, node : "Node") -> "Node":
+    if node in nodes_dict:
+        return nodes_dict[node]
+    else:
+        if node is not None:
+            nodes_dict[node] = Node(node.val)
+        return nodes_dict.get(node,None)
         
 class Solution:
-    def copyRandomList(self, head: 'Node') -> 'Node':                
+    
+    def copyRandomList(self, head: 'Node') -> 'Node':  # Updated solution
+        if head is None: 
+            return None
+        
+        nodes_dict = dict()
+        current = head
+        while current is not None:
+            new_node = fetch_node(nodes_dict,current)
+            new_node.next = fetch_node(nodes_dict,current.next)
+            new_node.random = fetch_node(nodes_dict,current.random)
+            current = advance_one(current)
+        return nodes_dict[head]
+    
+    def copyRandomList1(self, head: 'Node') -> 'Node':                
         def deepcopy(head : "Node",explored_nodes :dict() = None):
             new_head = None
             if not explored_nodes:

@@ -53,24 +53,25 @@ def get_next(node :"ListNode") -> "ListNode":
 
 def traverse (node : "ListNode", nodes_number : int) -> "ListNode":
     current = node
-    nodes_number -= 1
+    nodes_number -= 1           # Traversing N nodes means traversing N-1 links
     while nodes_number > 0:
         current = advance_one(current)
         nodes_number -= 1
     return current
 
 class Solution:
-    def splitListToParts(self, head: ListNode, k: int) -> list("ListNode"):
+    def splitListToParts(self, head: ListNode, k: int) -> list():
         total_nodes = count_nodes(head)
         lists = []
         split_ways = divide(total_nodes,k)
         current = head
-        for i,number in enumerate(split_ways):
+        for number in split_ways:
             lists.append(current)    
             current = traverse(current, number)
             next_node =  get_next(current)
+            # Sever node
             if current is not None:
                 current.next = None
             current = next_node
         return lists
-                
+
