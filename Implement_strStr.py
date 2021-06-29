@@ -6,10 +6,46 @@ Created on Thu Nov  5 01:59:38 2020
 """
 import re
 
+def compare_strings(
+    string1 : str, 
+    string2 :str, 
+    index : int,
+) -> bool:
+    str1_len= len(string1)
+    final_pos = index + str1_len
+    if final_pos > len(string2):
+        return False
+    return string1 == string2[index:final_pos]
+
+class Solution(object):
+    def strStr(self, haystack, needle):
+        index = -1
+        for i in range(len(haystack)):
+            if compare_strings(needle,haystack,i):
+                index = i
+                break
+        return index
+
+"""
+Latest beats 37% in terms of runtime and it beats
+8 % in terms of memory.
+
+I ought to have a look at a simplistic version
+of GREP.
+"""
+
 class Solution:
     
     def __init__(self) -> None:
         pass
+    
+    def strStr(self, haystack, needle):
+        index = -1
+        for i in range(len(haystack)):
+            if compare_strings(needle,haystack,i):
+                index = i
+                break
+        return index
     
     def bestSolution(self, haystack: str, needle: str) -> int:
         if len(needle) == 0:

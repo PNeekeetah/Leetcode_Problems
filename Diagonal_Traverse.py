@@ -21,6 +21,9 @@ Was it necessary to overcomplicate it like this?
 Nope.
 Did I enjoy doing it nonetheless?
 Yes.
+
+First time submission succesful? 
+Surprisingly, yes.
 """
 
 DIAG_UP = (-1,1)
