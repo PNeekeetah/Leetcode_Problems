@@ -5,6 +5,88 @@ Created on Wed Oct 28 17:32:36 2020
 @author: Nikita
 """
 
+
+
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jul  3 01:45:14 2021
+
+@author: Nikita
+"""
+
+"""
+This new solution beats 50% in terms of runtime and 40%
+in terms of memory.
+
+Sadly, my submission failed  the first time around becuase
+I thought I had to check the diagonals.
+"""
+
+def line_generator(line : int, matrix : list):
+    for col in range(0,9):
+        yield matrix[line][col]
+        
+def column_generator(column : int, matrix : list):
+    for row in range(0,9):
+        yield matrix[row][column]
+        
+def square_generator(row : int, column : int, matrix : list):
+    for row in range(row,row+3):
+        for col in range(column,column+3):
+            yield matrix[row][col]
+
+def duplicate_exists(generator):
+    seen_values = dict()
+    for i in generator:
+        if i != ".":
+            seen_values.setdefault(i,0)
+            seen_values[i] += 1
+            if seen_values[i] > 1:
+                return True
+    return False
+    
+    
+class Solution:
+    def isValidSudoku(self, board: list) -> bool:
+        square_starting_coords = [
+            (0,0),
+            (0,3),
+            (0,6),
+            (3,0),
+            (3,3),
+            (3,6),
+            (6,0),
+            (6,3),
+            (6,6),
+        ]
+        for line in range(0,9):
+            line_gen = line_generator(line,board)
+            if duplicate_exists(line_gen):
+                return False
+        
+        for column in range(0,9):
+            col_gen = column_generator(column,board)
+            if duplicate_exists(col_gen):
+                return False
+        
+        for square_origin in square_starting_coords:
+            x,y = square_origin
+            sqr_gen = square_generator(x,y,board)
+            if duplicate_exists(sqr_gen):
+                return False
+        
+        return True
+        
+
+solution = Solution()
+s = solution.isValidSudoku(mat)
+
+
+
+
+"""
+First attempt ever starts below :
+"""
 import numpy as np
 
 # Test cases

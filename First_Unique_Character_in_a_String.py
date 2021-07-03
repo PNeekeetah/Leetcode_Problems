@@ -5,10 +5,36 @@ Created on Tue Nov  3 17:38:19 2020
 @author: Nikita
 """
 
+"""
+Second attempt beats 14.54% in terms of runtime and 0% 
+in terms of memory.
+
+First time submisssion succesful. I marked it with
+# attempt 2
+"""
+
 class Solution:
     
     def __init__(self) -> None:
         pass
+    
+    def firstUniqChar1(self, s: str) -> int:        # attempt 2
+        char_dict = dict()
+        char_queue = []
+        
+        # Create index map
+        for index,char in enumerate(s):
+            char_dict.setdefault(char,[]).append(index)
+            if len(char_dict.get(char)) == 1:
+                char_queue.append(char)
+        
+        # Check each character that appeared in the order of the string
+        for char in char_queue:
+            if len(char_dict.get(char)) == 1:
+                return char_dict.get(char)[0]
+        
+        return -1
+            
     
     def best_solution(self, s : str) -> int:
         reference = "abcdefghijklmnopqrstuvwxyz"
