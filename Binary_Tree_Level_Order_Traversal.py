@@ -5,11 +5,69 @@ Created on Fri Feb 19 10:16:06 2021
 @author: Nikita
 """
 
+"""
+Beats 84% in terms of runtime and 
+44% in terms of memory usage. 
+
+First time submission succesful.
+"""
+
+# Definition for a binary tree node.
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
+
+def bfs (node : "TreeNode"):
+    queue = list()
+    nodes_list = list()
+    
+    if node is None:
+        return []
+    
+    queue.append((node,0))
+    index = 0
+    queue_length = 1
+    while index < queue_length:
+        current,level = queue[index]
+        nodes_list.append((current.val,level))
+        if current.left is not None:
+            queue.append((current.left,level+1))
+        if current.right is not None:
+            queue.append((current.right,level+1))
+        queue_length = len(queue)
+        index += 1
+    return nodes_list
+    
+def unpack_levels(node_list : list):
+    current_level = 0 
+    current_level_list = list()
+    solution = list()
+    for node, level in node_list:
+        if level != current_level:
+            solution.append(current_level_list)
+            current_level += 1
+            current_level_list = list()
+            
+        current_level_list.append(node)
+    else:
+        if current_level_list:
+            solution.append(current_level_list)
+
+    return solution
+
+class Solution:
+    def levelOrder(self, root: TreeNode) -> list(list()):
+        level_order = list()
+        level_order = bfs(root)
+        solution = unpack_levels(level_order)
+        return solution
+
+
+"""
+Older submissions
+"""
         
 class TreeTraversal:
     def __init__(self):
@@ -29,6 +87,8 @@ class TreeTraversal:
             if(current_node.right):
                 queue.append((current_node.right,current_depth+1))
             self.nodes_list.append((current_node,current_depth))
+            
+            
 
 class Solution:
     """
