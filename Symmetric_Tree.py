@@ -5,12 +5,59 @@ Created on Thu Feb 18 22:47:39 2021
 @author: Nikita
 """
 
+"""
+This solution beats 82% in terms of runtime and 51%
+in terms of memoyr.
+
+I find this a bit more intuitive than what I've written previously.
+
+The idea is to create a string representation of the binary tree.
+The left side is mirrored, meaning that the nodes are swapped
+when passed into the recursive function.
+
+Comparing the keys formed in this way yields the final answer.
+
+Second time submission succes
+"""
+
+# Definition for a binary tree node.
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
+
+
+def get_dfs_key(node, direction : str = "l", level : int = 0, mirror : bool = False) -> str:
+    if node is None:
+        return ""
+    
+    node_left = node.left
+    node_right = node.right
+    if mirror:
+        node_left = node.right
+        node_right = node.left
+    
+    string = str(node.val) + str(level) + direction
+    if node_left is not None:
+        string += get_dfs_key(node_left, "l", level + 1 , mirror)
+    
+    if node_right is not None:
+        string += get_dfs_key(node_right, "r", level + 1 , mirror)
+
+    return string
+
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        string1 = get_dfs_key(root.left, "l", mirror = False)
+        string2 = get_dfs_key(root.right, "l", mirror = True)
+
+        return string1 == string2
         
+"""
+Older solution below
+"""
+
 class TreeTraversal:
     def __init__(self):
         self.nodes_list = []

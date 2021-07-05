@@ -4,12 +4,47 @@ Created on Sat Mar 27 15:33:54 2021
 
 @author: Nikita
 """
+"""
+Runtime beats 76%
+Memory usage beats 82%
+
+First time submission succesful.
+"""
 
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
+
+def bfs (node : "TreeNode"):
+    nodes_list = list()
+    queue = list()
+    
+    if node is None:
+        return 0
+    queue.append((node,1))
+    
+    index = 0
+    max_level = 0
+    while index < len(queue):
+        current,level = queue[index]
+        if current.left is not None:
+            queue.append((current.left,level+1))
+        if current.right is not None:
+            queue.append((current.right,level+1))
+        max_level = max( level, max_level)
+        index += 1
+
+    return max_level
+
+class Solution2:
+    def maxDepth(self, root: "TreeNode") -> int:
+        return bfs(root)
+
+"""
+Older attempt
+"""
 
 class Solution:
     def constructMaximumBinaryTree(self, nums: list()) -> TreeNode:
