@@ -1,0 +1,12 @@
+{
+  "workbench.colorTheme": "Monokai",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.colorDecorators": true,
+  "workbench.activityBar.visible": true,
+  "markdown.preview.openMarkdownLinks": "inEditor",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.typeCheckingMode": "strict",
+  "python.pythonPath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\Python37_86\\python.exe"
+}
