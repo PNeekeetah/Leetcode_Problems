@@ -15,6 +15,7 @@ Memory : beats 59% of submissions
 
 4th attempt succesful since I messed up edge cases.
 """
+from typing import Tuple
 
 # Definition for singly-linked list.
 class ListNode:
@@ -47,7 +48,7 @@ def get_rotation(total_nodes : int, rotation : int) -> int:
         return 0
     return  
 
-def get_linked_list_portion (head : "ListNode", nodes : int) -> ("ListNode","ListNode"):
+def get_linked_list_portion (head : "ListNode", nodes : int) -> Tuple["ListNode","ListNode"]:
     if nodes == 0:
         return (head, None)
     
