@@ -2,6 +2,8 @@
 Sadly, this solution wasn't accepted.
 Turns out that they aren't looking for... 
 well, essentially an O(n^3) solution.
+
+Nonetheless, I think this likely works.
 """
 
 
