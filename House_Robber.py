@@ -4,16 +4,89 @@ Created on Sat Feb 20 19:10:29 2021
 
 @author: Nikita
 """
+
+"""
+First time submission succesful. That's pretty much it in all fairness, 
+it doesn't beat any solution either in terms ofr memory or runtime.
+
+Nonetheless, I'm proud I managed to find a solution for this darned 
+problem... 5 months later...
+"""
+
+def dp(total,index,array, SUMS = None):
+    if SUMS is None:
+        SUMS = dict()
+
+    
+    if index >= len(array):
+        return total
+    
+    if SUMS.get((index,total)) is not None:
+        return SUMS[(index,total)]
+    
+
+    skip = dp(total, index + 1,array, SUMS)
+    take = dp(total + array[index], index + 2, array,SUMS)
+    value = max(skip,take)
+    SUMS[(index,total)] = value
+    return value 
+
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        return dp(0,0,nums)
+            
+        
+################################# Old solutions
+
 import numpy as np
 
-from binarytree import tree, bst, heap
-from binarytree import Node
 
 l = [1,2,3,4,5,6,7,8,9]
 l = [51,6,2,0,41,0,500]
 #l = [3,24,5,2,0]
 #l = np.array([1,2,3,4,5,78,29,1,2])
-t1 = [2,5,64,41,132,4,1,2,4,5,1,2,4,6,2,7,72,2,1,243,5,1,2,3,1,1,1,1,1,2,3,4,5,6,7,3,6,7,38,8,3,32,1,1,24,62,2,2,2,2]
+t1 = [i for i in range(1,101)]
+
+
+SUMS = [[None for _ in range(sum(t1) + 1)] for _1 in range(len(t1) + 1)]
+CALLS1 = 0
+CALLS2 = 0
+
+def rec(sum, index):
+    global t1,CALLS1
+    CALLS1 += 1
+    if index >= len(t1):
+        return sum
+    
+    skip = rec(sum, index + 1)
+    take = rec(sum + t1[index], index + 2)
+    return max(skip,take)
+
+#val = rec(0,0)
+#print(val)
+
+
+def dp(sum,index):
+    global t1,SUMS, CALLS2 
+    CALLS2 += 1
+    
+    if index >= len(t1):
+        return sum
+    
+    if SUMS[index][sum] is not None:
+        return SUMS[index][sum]
+    
+
+    skip = dp(sum, index + 1)
+    take = dp(sum + t1[index], index + 2)
+    value = max(skip,take)
+    SUMS[index][sum] = value
+    return value 
+
+val1 = dp(0,0)
+print(val1)
+print("{} -- {}".format(CALLS1,CALLS2))
 
 
 class Solution:
