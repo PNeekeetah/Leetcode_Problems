@@ -11,7 +11,15 @@ it doesn't beat any solution either in terms ofr memory or runtime.
 
 Nonetheless, I'm proud I managed to find a solution for this darned 
 problem... 5 months later...
+
+Took me about 5 minutes to come up with the solution for this one. 
+
+Edit 31 July 2021:
+I managed to find the O(n) runtime O(1) memory solution/ 
+see "linear".
 """
+
+from typing import List
 
 def dp(total,index,array, SUMS = None):
     if SUMS is None:
@@ -31,10 +39,20 @@ def dp(total,index,array, SUMS = None):
     SUMS[(index,total)] = value
     return value 
 
+def linear(array): 
+    previous = 0
+    next_one = array[0]
+
+    for i in range(1,len(array)):
+        previous, next_one = next_one, max(previous + array[i], next_one)
+    
+    return next_one
+
+
 
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        return dp(0,0,nums)
+        return linear(nums)
             
         
 ################################# Old solutions
@@ -44,6 +62,9 @@ import numpy as np
 
 l = [1,2,3,4,5,6,7,8,9]
 l = [51,6,2,0,41,0,500]
+val = linear(l)
+print(val)
+
 #l = [3,24,5,2,0]
 #l = np.array([1,2,3,4,5,78,29,1,2])
 t1 = [i for i in range(1,101)]
